@@ -3,7 +3,14 @@ import MoodSelector from '../components/MoodSelector';
 import Playlist from '../components/Playlist';
 import MoodFace from '../components/MoodFace';
 import { getPlaylistByMood } from '../lib/spotify';
-import { Sparkles, Music } from 'lucide-react';
+import {
+  Music,
+  Headphones,
+  PartyPopper,
+  Flame,
+  Gamepad2,
+  Waves
+} from 'lucide-react';
 
 export default function Home() {
   const [playlist, setPlaylist] = useState(null);
@@ -22,38 +29,28 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen relative overflow-hidden flex items-center justify-center p-4 md:p-10 bg-gradient-to-r from-[#a18cd1] via-[#fbc2eb] to-[#fbc2eb]">
+    <main className="min-h-screen relative overflow-hidden flex items-center justify-center p-4 md:p-10 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
 
-      {/* Colorful Confetti Emoji */}
+      {/* Icon Confetti */}
       {showConfetti && (
-        <div className="absolute inset-0 pointer-events-none z-30 animate-emoji-confetti text-3xl">
-          <div className="absolute top-10 left-10">🎉</div>
-          <div className="absolute top-20 right-16">💖</div>
-          <div className="absolute bottom-10 left-20">🎶</div>
-          <div className="absolute bottom-12 right-14">✨</div>
-          <div className="absolute top-[45%] left-[48%]">🎧</div>
+        <div className="absolute inset-0 pointer-events-none z-30 text-white animate-emoji-confetti">
+          <PartyPopper className="absolute top-10 left-10 w-6 h-6" />
+          <Headphones className="absolute top-20 right-16 w-6 h-6" />
+          <Music className="absolute bottom-10 left-20 w-6 h-6" />
+          <Flame className="absolute bottom-12 right-14 w-6 h-6" />
+          <Gamepad2 className="absolute top-[45%] left-[48%] w-6 h-6" />
         </div>
       )}
 
-      {/* Floating Blobs */}
-      <div className="absolute w-96 h-96 bg-purple-300 rounded-full filter blur-3xl top-[-6rem] left-[-6rem] opacity-30 animate-float" />
-      <div className="absolute w-96 h-96 bg-pink-300 rounded-full filter blur-3xl bottom-[-6rem] right-[-6rem] opacity-30 animate-float-delay" />
-
-      {/* Music wave background */}
-      <div className="absolute top-0 left-0 w-full h-full z-0 opacity-10 animate-wave-pattern pointer-events-none" />
-
-      <div className="w-full max-w-4xl bg-white/90 backdrop-blur-2xl rounded-3xl shadow-xl shadow-pink-200 p-6 md:p-10 relative z-10 border border-white/40 animate-glow">
-
+      <div className="w-full max-w-4xl bg-gray-800/80 backdrop-blur-2xl rounded-xl shadow-lg p-6 md:p-10 relative z-10 border border-gray-700">
         <div className="text-center mb-6">
           <MoodFace mood={selectedMood} />
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 flex items-center justify-center gap-3 drop-shadow-md">
-            <Sparkles className="text-fuchsia-600 animate-wiggle" size={34} />
-            <span className="bg-gradient-to-r from-fuchsia-500 to-indigo-500 text-transparent bg-clip-text">
-              Mood Playlist Finder
-            </span>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-white flex items-center justify-center gap-3 drop-shadow-md">
+            <Headphones className="text-blue-400 animate-wiggle" size={34} />
+            <span className="text-blue-300">Mood Playlist Finder</span>
           </h1>
-          <p className="text-gray-500 mt-2 text-base md:text-lg font-medium tracking-wide">
-            Pilih mood kamu dan nikmati playlist spesial 🎧✨
+          <p className="text-gray-300 mt-2 text-base md:text-lg font-medium tracking-wide">
+            Pilih mood kamu dan nikmati playlist yang cocok dengan vibe-mu 🎧
           </p>
         </div>
 
@@ -62,12 +59,18 @@ export default function Home() {
         </div>
 
         {loading ? (
-          <div className="flex items-center justify-center mb-8">
-            <div className="relative w-12 h-12">
-              <div className="absolute inset-0 bg-pink-400 rounded-full animate-ping opacity-75" />
-              <div className="relative w-full h-full bg-pink-500 rounded-full" />
+          <div className="flex flex-col items-center justify-center mb-8 space-y-4">
+            {/* Waveform loader */}
+            <div className="flex items-end gap-1 h-6">
+              <div className="w-1.5 h-full bg-blue-400 animate-wave1 rounded" />
+              <div className="w-1.5 h-full bg-blue-400 animate-wave2 rounded" />
+              <div className="w-1.5 h-full bg-blue-400 animate-wave3 rounded" />
+              <div className="w-1.5 h-full bg-blue-400 animate-wave2 rounded" />
+              <div className="w-1.5 h-full bg-blue-400 animate-wave1 rounded" />
             </div>
-            <span className="ml-4 text-pink-600 font-semibold animate-fade-in">Menyiapkan musik terbaik untukmu...</span>
+            <span className="text-blue-300 font-medium tracking-wide animate-pulse">
+              Memuat playlist sesuai mood kamu...
+            </span>
           </div>
         ) : (
           playlist && (
@@ -78,14 +81,14 @@ export default function Home() {
         )}
 
         {!playlist && !loading && (
-          <div className="text-center text-gray-400 text-sm mt-10">
-            <Music className="mx-auto mb-2 w-7 h-7 text-pink-400 animate-bounce" />
-            Playlist akan muncul setelah kamu memilih mood 🎶
+          <div className="text-center text-gray-500 text-sm mt-10">
+            <Music className="mx-auto mb-2 w-7 h-7 text-blue-400 animate-bounce" />
+            Playlist akan muncul setelah kamu memilih mood
           </div>
         )}
       </div>
 
-      {/* Animation Styles */}
+      {/* Animations */}
       <style jsx>{`
         @keyframes float {
           0% { transform: translateY(0); }
@@ -100,32 +103,40 @@ export default function Home() {
           0% { transform: translateY(-100%); opacity: 1; }
           100% { transform: translateY(100vh); opacity: 0; }
         }
-        @keyframes glow {
-          0%, 100% { box-shadow: 0 0 25px rgba(255, 192, 203, 0.4); }
-          50% { box-shadow: 0 0 35px rgba(255, 105, 180, 0.6); }
-        }
         @keyframes fadeSlide {
           0% { opacity: 0; transform: translateY(20px); }
           100% { opacity: 1; transform: translateY(0); }
         }
+        @keyframes wave1 {
+          0%, 100% { height: 1rem; }
+          50% { height: 2rem; }
+        }
+        @keyframes wave2 {
+          0%, 100% { height: 0.5rem; }
+          50% { height: 1.8rem; }
+        }
+        @keyframes wave3 {
+          0%, 100% { height: 0.8rem; }
+          50% { height: 2.2rem; }
+        }
 
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-        .animate-float-delay {
-          animation: float 8s ease-in-out infinite;
-        }
         .animate-wiggle {
           animation: wiggle 1.8s infinite ease-in-out;
-        }
-        .animate-glow {
-          animation: glow 2s ease-in-out infinite;
         }
         .animate-fade-slide {
           animation: fadeSlide 0.5s ease-out forwards;
         }
-        .animate-emoji-confetti > div {
+        .animate-emoji-confetti > * {
           animation: confetti 1.5s ease-out forwards;
+        }
+        .animate-wave1 {
+          animation: wave1 1s infinite ease-in-out;
+        }
+        .animate-wave2 {
+          animation: wave2 1s infinite ease-in-out;
+        }
+        .animate-wave3 {
+          animation: wave3 1s infinite ease-in-out;
         }
       `}</style>
     </main>
